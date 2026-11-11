@@ -1,0 +1,109 @@
+/* =====================================================
+   qr.css — Etiquetas imprimibles y escáner QR
+   ===================================================== */
+
+/* ── Botón imprimir ── */
+.btn-imprimir {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+}
+
+/* ── Grid de etiquetas ── */
+.grid-etiquetas {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    padding: 20px;
+}
+
+.etiqueta {
+    background: #fff;
+    color: #222;
+    border: 1px dashed #aaa;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.etiqueta-nombre {
+    font-size: 0.8em;
+    font-weight: 700;
+    color: #222;
+    word-break: break-word;
+}
+
+.etiqueta-id {
+    font-size: 0.7em;
+    color: #555;
+    font-family: monospace;
+}
+
+/* ── Escáner ── */
+.contenedor-escaner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+}
+
+.instruccion-escaneo {
+    color: #d9ead3;
+    font-size: 1em;
+    text-align: center;
+    margin: 0;
+}
+
+#visor-escaner {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 3px solid var(--verde-boton);
+    background: #000;
+}
+
+#resultado-escaneo {
+    text-align: center;
+    font-size: 1em;
+    font-weight: 600;
+    padding: 12px 22px;
+    border-radius: 8px;
+    min-width: 220px;
+    display: none;
+}
+
+.resultado-exito { background: #d4edda; color: #1a5e1a; }
+.resultado-error  { background: #f8d7da; color: #721c24; }
+
+/* ── Botón QR en tabla de activos ── */
+.btn-qr {
+    background: var(--verde-boton);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.8em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-qr:hover { background: var(--verde-boton-hover); }
+
+/* ── Impresión: solo muestra la cuadrícula ── */
+@media print {
+    .btn-imprimir, .btn-volver, .encabezado, .pie-tabla { display: none !important; }
+    body { background: #fff !important; padding: 0 !important; }
+    .contenedor { box-shadow: none !important; border: none !important; margin: 0 !important; }
+    .cuerpo-pagina { background: #fff !important; padding: 10px !important; }
+    .grid-etiquetas { gap: 6px; padding: 0; }
+}
+
+@media (max-width: 700px) {
+    .grid-etiquetas { grid-template-columns: repeat(2, 1fr); }
+}

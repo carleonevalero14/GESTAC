@@ -1,0 +1,99 @@
+<?php require_once __DIR__ . '/../configuracion/sesion.php'; requerirSesion(); ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Préstamo de Periféricos — GESTAC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <script>(function(){var t=localStorage.getItem('gestac_tema');if(t&&t!=='original')document.documentElement.classList.add('tema-'+t);}());</script>
+    <link rel="stylesheet" href="../recursos/css/base.css">
+    <link rel="stylesheet" href="../recursos/css/temas.css">
+    <link rel="stylesheet" href="../recursos/css/componentes.css">
+    <link rel="stylesheet" href="../recursos/css/paginas.css">
+</head>
+<body style="background-image: url('../recursos/imagenes/fondo.png'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+    <div class="contenedor">
+        <header class="encabezado" style="position: relative;">
+            <button class="btn-volver" onclick="history.back()">←</button>
+            <h1 class="titulo-pagina">PRÉSTAMO DE PERIFÉRICOS</h1>
+        </header>
+
+        <div class="cuerpo-pagina">
+            <div class="encabezado-lista">
+                <h2 class="titulo-lista">Altas de préstamo &amp; consulta</h2>
+                <div class="barra-controles">
+                    <label class="caja-busqueda" aria-label="Buscar en préstamos">
+                        <span class="icono-busqueda">🔎</span>
+                        <input id="txtBuscar" type="search" placeholder="Buscar por usuario, equipo o serie…">
+                    </label>
+                    <button id="btnNuevo" class="btn-principal" type="button">Nuevo préstamo</button>
+                </div>
+            </div>
+
+            <!-- Formulario -->
+            <section id="formPrestamo" class="tarjeta-formulario oculto" aria-live="polite">
+                <h3 class="titulo-seccion">Registrar nuevo préstamo</h3>
+                <div class="formulario-cuadricula">
+                    <div>
+                        <label for="selUsuario">Nombre de la persona</label>
+                        <select id="selUsuario" required>
+                            <option value="" selected disabled>Cargando usuarios…</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="inpEquipo">Equipo</label>
+                        <input id="inpEquipo" type="text" placeholder="Se autocompleta según la serie" readonly>
+                    </div>
+                    <div>
+                        <label for="selSerie">Número de serie</label>
+                        <select id="selSerie" required>
+                            <option value="" selected disabled>Cargando series…</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="inpFechaPrestamo">Fecha de préstamo</label>
+                        <input id="inpFechaPrestamo" type="date" required>
+                    </div>
+                    <div>
+                        <label for="inpFechaDevolucion">Fecha de devolución</label>
+                        <input id="inpFechaDevolucion" type="date" required>
+                    </div>
+                </div>
+                <div class="formulario-botones">
+                    <button id="btnCancelar" type="button">Cancelar</button>
+                    <button id="btnAgregar" type="button">Agregar préstamo</button>
+                </div>
+                <p id="msgError" style="margin:8px 2px 0;font-weight:700" class="mensaje-error"></p>
+            </section>
+
+            <h3 class="titulo-seccion">Préstamos</h3>
+            <div class="contenedor-tabla" role="region" aria-label="Tabla de préstamos">
+                <table class="tabla-activos" id="tblPrestamos">
+                    <thead>
+                        <tr>
+                            <th style="width:22%">Usuario</th>
+                            <th style="width:22%">Equipo</th>
+                            <th style="width:16%">N.º Serie</th>
+                            <th style="width:16%">Fecha préstamo</th>
+                            <th style="width:16%">Fecha devolución</th>
+                            <th style="width:8%">Estado</th>
+                            <th style="width:12%">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="prestBody">
+                        <tr><td class="celda-vacia" colspan="7">Sin préstamos…</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pie-tabla">
+                <span id="resumen"></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="../recursos/js/peticiones.js"></script>
+    <script src="../recursos/js/prestamos.js"></script>
+</body>
+</html>

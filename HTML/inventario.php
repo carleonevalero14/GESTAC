@@ -1,0 +1,81 @@
+<?php require_once __DIR__ . '/../configuracion/sesion.php'; requerirSesion(); ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario de Periféricos — GESTAC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <script>(function(){var t=localStorage.getItem('gestac_tema');if(t&&t!=='original')document.documentElement.classList.add('tema-'+t);}());</script>
+    <link rel="stylesheet" href="../recursos/css/base.css">
+    <link rel="stylesheet" href="../recursos/css/temas.css">
+    <link rel="stylesheet" href="../recursos/css/componentes.css">
+    <link rel="stylesheet" href="../recursos/css/paginas.css">
+</head>
+<body style="background-image: url('../recursos/imagenes/fondo.png'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+    <div class="contenedor">
+        <header class="encabezado" style="position: relative;">
+            <button class="btn-volver" onclick="history.back()">←</button>
+            <h1 class="titulo-pagina">INVENTARIO DE PERIFÉRICOS</h1>
+        </header>
+
+        <div class="cuerpo-pagina">
+            <div class="encabezado-lista">
+                <h2 class="titulo-lista">Altas y consulta</h2>
+                <div class="barra-controles">
+                    <button class="btn-exportar" onclick="exportarExcel()">Exportar a Excel</button>
+                    <label class="caja-busqueda" aria-label="Buscar periférico">
+                        <span class="icono-busqueda" aria-hidden="true">🔎</span>
+                        <input type="text" id="searchInput" placeholder="Buscar por nombre o serie">
+                    </label>
+                </div>
+            </div>
+
+            <section class="tarjeta-formulario">
+                <form id="formInventario" autocomplete="off">
+                    <div class="formulario-cuadricula">
+                        <div>
+                            <label for="nombre">Nombre del periférico</label>
+                            <input type="text" id="nombre" name="nombre" required>
+                        </div>
+                        <div>
+                            <label for="sn">Número de serie (S/N)</label>
+                            <input type="text" id="sn" name="sn" required>
+                        </div>
+                    </div>
+                    <div class="formulario-botones" style="justify-content:center;margin-top:16px;">
+                        <button type="submit" id="btnAgregar" class="btn-principal" style="min-width:220px;">Agregar al Inventario</button>
+                    </div>
+                </form>
+            </section>
+
+            <div class="contenedor-tabla">
+                <table class="tabla-activos" id="tablaPerifericos" role="grid">
+                    <colgroup>
+                        <col style="width:42%">
+                        <col style="width:42%">
+                        <col style="width:16%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>S/N</th>
+                            <th class="col-eliminar">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="3" class="celda-vacia">Cargando periféricos...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pie-tabla">
+                <span id="infoInventario">Mostrando 0 de 0</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="../recursos/js/peticiones.js"></script>
+    <script src="../recursos/js/inventario.js"></script>
+</body>
+</html>

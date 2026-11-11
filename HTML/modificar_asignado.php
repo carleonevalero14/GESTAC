@@ -1,0 +1,110 @@
+<?php require_once __DIR__ . '/../configuracion/sesion.php'; requerirSesion('admin'); ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Usuario Asignado — GESTAC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <script>(function(){var t=localStorage.getItem('gestac_tema');if(t&&t!=='original')document.documentElement.classList.add('tema-'+t);}());</script>
+    <link rel="stylesheet" href="../recursos/css/base.css">
+    <link rel="stylesheet" href="../recursos/css/temas.css">
+    <link rel="stylesheet" href="../recursos/css/componentes.css">
+    <link rel="stylesheet" href="../recursos/css/paginas.css">
+</head>
+<body style="background-image: url('../recursos/imagenes/fondo.png'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+
+    <div class="contenedor">
+        <header class="encabezado" style="position: relative;">
+            <button class="btn-volver" onclick="history.back()">←</button>
+            <h1 class="titulo-pagina">MODIFICAR USUARIO ASIGNADO</h1>
+        </header>
+
+        <div class="cuerpo-pagina">
+            <div class="encabezado-lista">
+                <h2 class="titulo-lista">Lista de Usuarios</h2>
+                <div class="barra-controles">
+                    <label class="caja-busqueda" aria-label="Buscar usuario">
+                        <span class="icono-busqueda" aria-hidden="true">🔎</span>
+                        <input type="text" id="searchInput" placeholder="Buscar usuario">
+                    </label>
+                    <div class="desplegable">
+                        <select id="filterUbicacion" aria-label="Filtrar por ubicación">
+                            <option value="">Todas las ubicaciones</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contenedor-tabla">
+                <table class="tabla-activos" role="grid">
+                    <colgroup>
+                        <col style="width:11%">
+                        <col style="width:22%">
+                        <col style="width:18%">
+                        <col style="width:27%">
+                        <col style="width:12%">
+                        <col style="width:10%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th scope="col">Nómina</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Ubicación</th>
+                            <th scope="col">Activo asignado</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col" class="col-editar">Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="assets-data">
+                        <tr><td colspan="6" class="celda-vacia">Cargando usuarios...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pie-tabla">
+                <span class="pagination-info">Mostrando Usuarios 0 de 0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Usuario -->
+    <div id="modalEditarUsuario" class="modal" role="dialog" aria-modal="true" aria-labelledby="tituloModalEditar">
+        <div class="modal-contenido">
+            <h2 id="tituloModalEditar">Editar Usuario</h2>
+            <form id="formEditarUsuario" method="POST">
+                <input type="hidden" name="nomina" id="edit-nomina">
+                <div class="formulario-cuadricula">
+                    <div>
+                        <label for="edit-nomina_display">Nómina</label>
+                        <input type="text" id="edit-nomina_display" readonly style="background:#e9ecef;cursor:not-allowed">
+                    </div>
+                    <div>
+                        <label for="edit-nombre">Nombre</label>
+                        <input type="text" id="edit-nombre" name="nombre" required>
+                    </div>
+                    <div>
+                        <label for="edit-ubicacion">Ubicación</label>
+                        <input type="text" id="edit-ubicacion" name="ubicacion" required>
+                    </div>
+                    <div>
+                        <label for="edit-activo">Activo asignado</label>
+                        <input type="text" id="edit-activo" name="activo">
+                    </div>
+                    <div>
+                        <label for="edit-fecha">Fecha</label>
+                        <input type="date" id="edit-fecha" name="fecha">
+                    </div>
+                </div>
+                <div class="formulario-botones">
+                    <button type="button" id="cancelarEditar">Cancelar</button>
+                    <button type="submit" id="guardarCambios">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../recursos/js/peticiones.js"></script>
+    <script src="../recursos/js/asignados.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+/* =====================================================
+   temas.css — Sistema de temas: Claro / Original / Oscuro
+   Aplica sobrescritura de variables y superficies hardcodeadas
+   La clase se pone en <html>: html.tema-claro | html.tema-oscuro
+   (sin clase = tema original por defecto)
+   ===================================================== */
+
+/* ══════════════════════════════════════════════════════
+   TEMA CLARO — Bosque a mediodía
+   Misma esencia verde, tonos más brillantes y aireados
+   ══════════════════════════════════════════════════════ */
+html.tema-claro {
+    /* Paleta (mismos nombres, tonos más claros) */
+    --verde-900: #1e5a1e;
+    --verde-800: #2e7a2e;
+    --verde-700: #4a9e4a;
+    --verde-600: #58ae58;
+    --verde-500: #3d8d3d;
+    --verde-400: #72c076;
+    --verde-300: #a4d8a8;
+    --verde-200: #c8eaca;
+    --verde-100: #eaf5ea;
+
+    /* Semánticos */
+    --verde-oscuro-primario: #2e7a2e;
+    --verde-claro-primario:  #3d8d3d;
+    --verde-boton:           #4a9e4a;
+    --verde-boton-hover:     #3d8d3d;
+
+    /* Texto */
+    --texto-oscuro:      #1a3d1a;
+    --texto-secundario:  #3a6a3a;
+    --texto-sobre-verde: #f2fbf2;
+    --texto-acento:      #a4d8a8;
+
+    /* Superficies */
+    --fondo-panel:      #f4fbf4;
+    --sombra-principal: rgba(0, 0, 0, 0.09);
+}
+
+/* Fondo de página — reemplaza la imagen oscura por mint suave */
+html.tema-claro body {
+    background-image: none !important;
+    background-color: #cde9cd !important;
+}
+
+/* Tablas internas (thead hardcodeado oscuro → verde medio) */
+html.tema-claro .tabla-activos thead {
+    background: linear-gradient(180deg, #2e7a2e, #3d8d3d) !important;
+}
+
+/* Menú body fallback */
+html.tema-claro body { background-color: #cde9cd !important; }
+
+
+/* ══════════════════════════════════════════════════════
+   TEMA OSCURO — Bosque de medianoche
+   Misma esencia verde, fondos casi negros, acentos vivos
+   ══════════════════════════════════════════════════════ */
+html.tema-oscuro {
+    /* Paleta (invertida: 100 = más oscuro, 900 = acento brillante) */
+    --verde-900: #4CAF50;   /* acento más brillante — texto de énfasis */
+    --verde-800: #3a9a3a;
+    --verde-700: #2a7a2a;
+    --verde-600: #1c521c;
+    --verde-500: #162816;
+    --verde-400: #0f1f0f;
+    --verde-300: #4CAF50;   /* mantener acento vivo */
+    --verde-200: #2a6a2a;
+    --verde-100: #0d1f0d;   /* superficie oscura para KPI cards */
+
+    /* Semánticos */
+    --verde-oscuro-primario: #050d05;
+    --verde-claro-primario:  #0a1a0a;
+    --verde-boton:           #112211;
+    --verde-boton-hover:     #1a3a1a;
+
+    /* Texto */
+    --texto-oscuro:      #c5e8c5;
+    --texto-secundario:  #7aaa7a;
+    --texto-sobre-verde: #cde8cd;
+    --texto-acento:      #4CAF50;
+
+    /* Superficies */
+    --fondo-panel:      #070f07;
+    --sombra-principal: rgba(0, 0, 0, 0.75);
+}
+
+/* Fondo de página — casi negro verde */
+html.tema-oscuro body {
+    background-image: none !important;
+    background-color: #040904 !important;
+}
+
+/* ── Paneles laterales (fondo blanco hardcodeado → oscuro) ── */
+html.tema-oscuro #panelMetricas,
+html.tema-oscuro #panelSolicitudes,
+html.tema-oscuro #panelNotif {
+    background: #0d1f0d;
+}
+
+/* ── Menú de configuración ── */
+html.tema-oscuro .menu-config {
+    background: #0d1f0d;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+html.tema-oscuro .menu-config a,
+html.tema-oscuro .menu-config > span,
+html.tema-oscuro .menu-config .tiene-submenu > span {
+    color: #c5e8c5;
+}
+html.tema-oscuro .menu-config a:hover,
+html.tema-oscuro .menu-config .tiene-submenu > span:hover {
+    background: #1a3a1a;
+    color: #c5e8c5;
+}
+
+/* ── Submenús flotantes (de tarjeta y de config) ── */
+html.tema-oscuro .submenu,
+html.tema-oscuro .submenu-config {
+    background: #0d1f0d;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+html.tema-oscuro .submenu a { color: #c5e8c5; }
+html.tema-oscuro .submenu a:hover { background: #1a3a1a; color: #c5e8c5; }
+html.tema-oscuro .submenu-config a { color: #c5e8c5; }
+html.tema-oscuro .submenu-config a:hover { background: #1a3a1a; color: #c5e8c5; }
+
+/* ── Panel de métricas: cuerpo ── */
+html.tema-oscuro .panel-metricas-cuerpo { background: #0d1f0d; }
+
+/* ── Panel solicitudes: tabla, formulario ── */
+html.tema-oscuro .tabla-sol td {
+    border-bottom-color: #1a3a1a;
+    color: #c5e8c5;
+}
+html.tema-oscuro .tabla-sol tr:hover td { background: #142214; }
+html.tema-oscuro .form-sol select,
+html.tema-oscuro .form-sol textarea {
+    background: #0a180a;
+    border-color: #1a3a1a;
+    color: #c5e8c5;
+}
+html.tema-oscuro .form-sol label { color: #4CAF50; }
+
+/* ── Notificaciones: ítems ── */
+html.tema-oscuro .notif-item {
+    border-bottom-color: #1a3a1a;
+}
+html.tema-oscuro .notif-item:hover        { background: #142214; }
+html.tema-oscuro .notif-item.no-leida     { background: #0f250f; }
+html.tema-oscuro .notif-item.no-leida:hover { background: #183018; }
+
+/* ── Tablas internas hardcodeadas ── */
+html.tema-oscuro .tabla-activos thead {
+    background: linear-gradient(180deg, #050d05, #0a1a0a) !important;
+}
+
+/* ── Menú body fallback ── */
+html.tema-oscuro body { background-color: #040904 !important; }
+
+/* ── Leyenda usuario (texto sobre fondo oscuro puro) ── */
+html.tema-oscuro .leyenda-usuario { color: #7aaa7a; }
+
+
+/* ══════════════════════════════════════════════════════
+   INDICADOR DEL TEMA ACTIVO en el submenú de config
+   ══════════════════════════════════════════════════════ */
+.menu-config [data-tema].tema-activo {
+    font-weight: 800;
+}
+.menu-config [data-tema].tema-activo::after {
+    content: ' ✓';
+    font-size: 0.82em;
+    opacity: 0.75;
+}

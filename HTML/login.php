@@ -1,0 +1,80 @@
+<?php
+require_once __DIR__ . '/../configuracion/sesion.php';
+
+// Si ya hay una sesión activa, no se muestra el login.
+if (haySesion()) {
+    header('Location: ' . (esAdmin() ? 'menu_admin.php' : 'menu_user.php'));
+    exit;
+}
+
+// Aviso cuando el usuario llega aquí por una sesión expirada o cerrada.
+$avisoSesion = isset($_GET['expirada'])
+    ? '<p class="mensaje-error-login">⚠️ Tu sesión finalizó. Inicia sesión de nuevo.</p>'
+    : '';
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión — GESTAC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../recursos/css/base.css">
+    <link rel="stylesheet" href="../recursos/css/inicio_sesion.css">
+</head>
+<body style="background-image: url('../recursos/imagenes/fondo.png'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+    <div class="contenedor-login">
+        <div class="panel-izquierdo">
+            <h1 id="GESTAC">GESTAC</h1>
+        </div>
+
+        <div class="panel-derecho">
+            <div class="caja-formulario">
+                <div class="icono-usuario">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3237/3237472.png" alt="Icono de Usuario">
+                </div>
+
+                <h1>INICIAR SESIÓN</h1>
+
+                <div id="mensajeError"><?php echo $avisoSesion; ?></div>
+
+                <form id="formularioLogin">
+                    <label for="campoUsuario">USUARIO</label>
+                    <input type="text" id="campoUsuario" name="usuario" class="campo-entrada" placeholder="Ingresa tu usuario" required>
+
+                    <label for="campoContrasena">CONTRASEÑA</label>
+                    <input type="password" id="campoContrasena" name="password" class="campo-entrada" placeholder="Ingresa tu contraseña" required>
+
+                    <button type="submit" class="boton-login">ENTRAR</button>
+                </form>
+
+                <p class="enlace-contrasena"><a href="cambiar_contraseña.php">¿Has olvidado tu contraseña?</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById('formularioLogin').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const usuario    = document.getElementById('campoUsuario').value.trim();
+        const contrasena = document.getElementById('campoContrasena').value.trim();
+        const divError   = document.getElementById('mensajeError');
+
+        fetch('../servicios/autenticacion.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `usuario=${encodeURIComponent(usuario)}&password=${encodeURIComponent(contrasena)}`
+        })
+        .then(r => r.json())
+        .then(datos => {
+            if (datos.exito) {
+                window.location.href = datos.rol === 'admin' ? 'menu_admin.php' : 'menu_user.php';
+            } else {
+                divError.innerHTML = `<p class="mensaje-error-login">${datos.mensaje}</p>`;
+            }
+        })
+        .catch(err => console.error('Error:', err));
+    });
+    </script>
+</body>
+</html>

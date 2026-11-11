@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Contraseña — GESTAC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../recursos/css/base.css">
+    <link rel="stylesheet" href="../recursos/css/inicio_sesion.css">
+</head>
+<body style="background-image: url('../recursos/imagenes/fondo.png'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+    <div class="contenedor-login">
+        <div class="panel-izquierdo">
+            <h1 id="GESTAC">GESTAC</h1>
+        </div>
+
+        <div class="panel-derecho">
+            <!-- Paso 1: verificar admin -->
+            <div id="seccion-login" class="caja-formulario">
+                <div class="icono-usuario">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3237/3237472.png" alt="Icono de Usuario">
+                </div>
+                <h1>RECUPERAR CONTRASEÑA</h1>
+                <div id="mensajeError"></div>
+                <form id="formularioLogin">
+                    <label for="campoUsuario">USUARIO ADMIN</label>
+                    <input type="text" id="campoUsuario" name="usuario" class="campo-entrada" placeholder="Ingresa tu usuario" required>
+
+                    <label for="campoContrasena">CONTRASEÑA ADMIN</label>
+                    <input type="password" id="campoContrasena" name="password" class="campo-entrada" placeholder="Ingresa tu contraseña" required>
+
+                    <button type="submit" class="boton-login">ENTRAR</button>
+                </form>
+                <p class="enlace-volver-login"><a href="login.php">Iniciar sesión</a></p>
+            </div>
+
+            <!-- Paso 2: cambiar contraseña -->
+            <div id="seccion-cambio" class="caja-formulario" style="display:none;">
+                <div class="icono-usuario">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3237/3237472.png" alt="Icono de Usuario">
+                </div>
+                <h1>CAMBIAR CONTRASEÑA</h1>
+                <div id="mensajeCambio"></div>
+                <form id="formularioCambio">
+                    <label for="campoUsuarioCambio">USUARIO</label>
+                    <input type="text" id="campoUsuarioCambio" name="usuario_update" class="campo-entrada" placeholder="Usuario a actualizar" required>
+
+                    <label for="campoNuevaContrasena">NUEVA CONTRASEÑA</label>
+                    <input type="password" id="campoNuevaContrasena" name="new_password" class="campo-entrada" placeholder="Nueva contraseña" required>
+
+                    <button type="submit" class="boton-login">ACTUALIZAR</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById('formularioLogin').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const usuario    = document.getElementById('campoUsuario').value.trim();
+        const contrasena = document.getElementById('campoContrasena').value.trim();
+        const divError   = document.getElementById('mensajeError');
+
+        fetch('../servicios/autenticacion.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `usuario=${encodeURIComponent(usuario)}&password=${encodeURIComponent(contrasena)}`
+        })
+        .then(r => r.json())
+        .then(datos => {
+            if (datos.exito && datos.rol === 'admin') {
+                divError.innerHTML = '<p style="color:green;">✅ Bienvenido administrador</p>';
+                document.getElementById('seccion-login').style.display = 'none';
+                document.getElementById('seccion-cambio').style.display = 'block';
+            } else {
+                divError.innerHTML = '<p class="mensaje-error-login">❌ Credenciales inválidas o no eres admin</p>';
+            }
+        })
+        .catch(err => console.error('Error:', err));
+    });
+
+    document.getElementById('formularioCambio').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const usuarioCambio  = document.getElementById('campoUsuarioCambio').value.trim();
+        const nuevaContrasena = document.getElementById('campoNuevaContrasena').value.trim();
+        const divMensaje     = document.getElementById('mensajeCambio');
+
+        fetch('../servicios/autenticacion.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `accion=cambiar_contrasena&usuario_update=${encodeURIComponent(usuarioCambio)}&new_password=${encodeURIComponent(nuevaContrasena)}`
+        })
+        .then(r => r.json())
+        .then(datos => {
+            if (datos.exito) {
+                divMensaje.innerHTML = `<p style="color:green;">${datos.mensaje}<br>Redirigiendo al login...</p>`;
+                setTimeout(() => { window.location.href = 'login.php'; }, 2000);
+            } else {
+                divMensaje.innerHTML = `<p class="mensaje-error-login">${datos.mensaje}</p>`;
+            }
+        })
+        .catch(err => console.error('Error:', err));
+    });
+    </script>
+</body>
+</html>

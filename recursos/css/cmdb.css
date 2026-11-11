@@ -1,0 +1,188 @@
+/* =====================================================
+   cmdb.css — Estilos propios del módulo CMDB / Monitoreo
+   Requiere: base.css, componentes.css y paginas.css antes.
+   Solo agrega lo que no existe ya como componente; toda la
+   paleta sale de las variables de base.css y de los colores
+   de estado ya usados en el proyecto (chips y btn-eliminar).
+   ===================================================== */
+
+/* ── Menú: tarjeta ancha del 5º módulo (fila completa) ── */
+.contenedor-menu.con-cmdb { height: auto; min-height: 600px; }
+.contenedor-menu.con-cmdb .cuadricula-modulos { height: auto; grid-template-rows: 215px 215px 96px; }
+.tarjeta-modulo-ancha { grid-column: 1 / -1; flex-direction: row; gap: 16px; padding: 12px 30px; }
+.tarjeta-modulo-ancha .imagen-modulo { width: 48px !important; height: 48px !important; margin-bottom: 0; }
+
+/* ── Barra de almacenamiento (tabla y detalle) ── */
+.barra-almacen {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+.barra-almacen-pista {
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    overflow: hidden;
+}
+.barra-almacen-relleno {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--verde-400);
+    transition: width 0.6s ease;
+}
+.barra-almacen-relleno.nivel-bajo    { background: var(--verde-300); }
+.barra-almacen-relleno.nivel-critico { background: #9b2c2c; }
+.barra-almacen-texto {
+    font-size: 0.78rem;
+    color: #dfefdf;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ── Chips de estado del equipo (extiende .chip de componentes.css) ── */
+.chip.offline { color: #4d1f1f; background: #ffd4d4; }
+.chip.baja    { color: #333;    background: #d9d9d9; }
+
+/* ── Reloj de última actualización ── */
+.cmdb-reloj {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 13px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 0.82rem;
+    white-space: nowrap;
+}
+.cmdb-reloj strong { font-variant-numeric: tabular-nums; }
+.cmdb-reloj .punto {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4CAF50;
+    animation: pulso-reloj-cmdb 2s ease-in-out infinite;
+}
+@keyframes pulso-reloj-cmdb {
+    50% { opacity: 0.3; }
+}
+.cmdb-reloj-fila {
+    display: flex;
+    justify-content: flex-end;
+    margin: 2px 0 12px;
+}
+
+/* ── Tarjetas del detalle (Hardware / Red & Energía / Cloud-Sesión) ── */
+.cmdb-tarjetas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 10px 0 14px;
+}
+.cmdb-tarjeta {
+    background: rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 14px 16px;
+}
+.cmdb-tarjeta h3 {
+    margin: 0 0 10px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--verde-200);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding-bottom: 8px;
+}
+.cmdb-dato {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 4px 0;
+    font-size: 0.88rem;
+}
+.cmdb-dato dt { color: rgba(255, 255, 255, 0.65); font-weight: 600; flex-shrink: 0; }
+.cmdb-dato dd { margin: 0; color: #fff; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cmdb-tarjeta dl { margin: 0; }
+
+/* ── Sección de almacenamiento por unidad (detalle) ── */
+.cmdb-unidades {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    margin: 10px 0 14px;
+}
+.cmdb-unidad {
+    background: rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 12px 14px;
+}
+.cmdb-unidad-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+/* ── Alertas preventivas ── */
+.cmdb-alertas { display: flex; flex-direction: column; gap: 8px; margin: 10px 0 14px; }
+.cmdb-alerta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-left: 4px solid var(--verde-400);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+}
+.cmdb-alerta.severidad-critica { border-left-color: #9b2c2c; }
+.cmdb-alerta.severidad-media   { border-left-color: var(--verde-300); }
+.cmdb-alerta-texto { flex: 1; min-width: 0; }
+.cmdb-alerta-texto strong { display: block; }
+.cmdb-alerta-meta { font-size: 0.78rem; color: rgba(255, 255, 255, 0.6); }
+.cmdb-alerta-acciones { display: flex; gap: 8px; flex-shrink: 0; }
+
+/* ── Línea de tiempo de cambios (detalle) ── */
+.cmdb-timeline {
+    margin: 10px 0 14px;
+    padding-left: 18px;
+    border-left: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.cmdb-evento { position: relative; font-size: 0.88rem; }
+.cmdb-evento::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--verde-300);
+    border: 2px solid var(--verde-800);
+}
+.cmdb-evento-fecha { font-size: 0.75rem; color: rgba(255, 255, 255, 0.55); }
+
+/* ── Gráfica de tendencia (detalle) ── */
+.cmdb-grafica {
+    background: rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 14px;
+    margin: 10px 0 14px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+    .cmdb-tarjetas { grid-template-columns: 1fr; }
+}
